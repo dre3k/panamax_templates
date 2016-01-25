@@ -1,30 +1,34 @@
 ---
 name: demo_rails_app
-description: redis + rails + openresty
+description: ''
 keywords: ''
-type: Rails
+type: Default
 documentation: Here should be documentation.
 images:
-- name: dre3k_redis_server_latest
+- name: redis_server
   source: index.docker.io/dre3k/redis_server:latest
+  category: DB
   type: Default
   volumes:
   - host_path: "/data"
     container_path: "/data"
 - name: rails_app_1
   source: dre3k/rails_app:latest
+  category: DB
   type: Default
   links:
-  - service: dre3k_redis_server_latest
+  - service: redis_server
     alias: redis_server
 - name: rails_app_2
   source: dre3k/rails_app:latest
+  category: DB
   type: Default
   links:
-  - service: dre3k_redis_server_latest
+  - service: redis_server
     alias: redis_server
-- name: dre3k_openresty
+- name: openresty
   source: dre3k/openresty:latest
+  category: DB
   type: Default
   ports:
   - host_port: '80'
