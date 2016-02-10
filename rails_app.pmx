@@ -1,0 +1,41 @@
+---
+name: rails_app
+description: redis + rails + nginx
+keywords: ''
+type: Rails
+documentation: ''
+images:
+- name: redis_server
+  source: dre3k/redis_server:latest
+  category: DB
+  type: Default
+  volumes:
+  - host_path: "/data"
+    container_path: "/data"
+- name: rails_app_1
+  source: dre3k/rails_app:latest
+  category: APP
+  type: Default
+  links:
+  - service: redis_server
+    alias: redis_server
+- name: rails_app_2
+  source: dre3k/rails_app:latest
+  category: APP
+  type: Default
+  links:
+  - service: redis_server
+    alias: redis_server
+- name: nginx
+  source: dre3k/openresty:latest
+  category: WEB
+  type: Default
+  ports:
+  - host_port: '80'
+    container_port: '80'
+    proto: TCP
+  links:
+  - service: rails_app_1
+    alias: rails_app_1
+  - service: rails_app_2
+    alias: rails_app_2
