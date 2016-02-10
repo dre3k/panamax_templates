@@ -26,10 +26,14 @@ images:
   links:
   - service: redis_server
     alias: redis_server
-- name: dre3k_openresty
+- name: nginx
   source: dre3k/openresty:latest
   category: WEB
   type: Default
+  ports:
+  - host_port: '80'
+    container_port: '80'
+    proto: TCP
   links:
   - service: rails_app_1
     alias: rails_app_1
